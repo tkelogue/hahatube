@@ -1,0 +1,95 @@
+<style>
+* {
+    box-sizing: border-box;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+input[type=number] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+select{
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+
+input[type=radio] {
+	margin-left:10px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+labg{
+	margin-left:60px;
+}
+
+labd{
+	margin-right:30px;
+}
+	
+input[type=url]{
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 10px;
+	margin-left:10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+input[type=reset] {
+    background-color: #4CAF50;
+	margin-right:30px;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;	
+}
+
+input[type=reset]:hover {
+    background-color: red;
+}
+
+input[type=submit]:hover {
+    background-color: #45a099;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+	padding-top: 10px;
+    padding-left: 10px;
+	position: relative;
+}
+
+	
+/* Responsive layout */
+@media screen and (max-width: 600px) {
+    input[type=submit] {        
+        margin-top: 0;
+    }
+}
+</style>

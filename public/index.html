@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="viApp">
+	<head>
+		<title>Liste de videos selectionnées</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="hahatube, video, tractr, KT, Test" />
+		
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script> 
+			 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+		-->
+		<script src="javascripts/angular.js"></script>
+		<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.15/angular-filter.js"></script>
+		<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>	
+		
+		<!-- //I don't use ng-table
+		<script src="javascripts/lib/angular-route.js"></script> 
+		-->
+		<script src="javascripts/lib/ui-bootstrap-tpls-2.5.0.js"></script>
+		
+		<!-- Here are my scripts -->
+		<script src="javascripts/app-ang.js"></script> 
+		<script src="javascripts/pays.js"></script>
+		<!-- CSS files -->
+		<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" type="text/css" media="all">		
+		<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
+</head>	
+
+<body > 
+	<div style=" margin-left:15px;" ng-controller="fControl">
+		<div  class="container" style="max-width: 400px; float:left" >
+			
+			<div ><h3 style="text-align:center;"> Ajouter une nouvelle video </h3>	
+				<form action="/addit" method="post">
+					Titre de la video<br>
+					<input required  type='text' id='titre' name='titre' /><br><br>
+					
+					<labd>Nom (de la voix)</labd>		
+					<labg>Prenom (de la voix) </labg><br>
+					<input required  type='text'  style="width:45%" id='nom' name='nom'/>
+					<input required  type='text'  style="width:53%" id='prenom' name='prenom'/><br><br>
+					
+					Sexe (de la voix) <br>
+					<input type="radio" name="sexe" value="homme" > Homme 
+					<input type="radio" name="sexe" value="femme" > Femme
+					<input type="radio" name="sexe" value="autre" > Autre<br><br>
+					
+					<labd>Année</labd>		
+					<labg>Langue</labg><br>
+					<input required  type='number' id='annee' name='annee' min=1804 max=2018 value="2000" style="width:30%"/>
+					<select name="langue" style="width:40%" ng-model="selectedlangue" ng-options="langue for langue in langues">
+					</select><br><br>					
+						
+					<labd> Minutes (1+)</labd>
+					<labg>Rythme </labg><br>
+					<input type="number" name="duree" min="1" style="width:30%">
+					<select name="rythme" ng-model="selectedrythme" ng-options="rythme for rythme in rythmes" style="width:48%">
+					</select><br><br>
+
+					Pays <br>
+					<select name="pays" ng-model="selectedpays" ng-options="pays for pays in pays">
+					</select><br><br>
+																				
+					Video URL(un lien Youtube, Vimeo, Facebook, etc)<br>
+					<input type="url" name="urlvideo" ><br><br>
+					
+					<input type="reset" value="Annuler">
+					<input type="submit" value="Soumettre">
+				</form>
+			</div>
+		</div>
+		<div  class="container" style=" margin-left:15px;max-width: 400px; float:left">
+			<div ng-controller="viControl" >
+				<h3 style="text-align:center;">Liste de vidéos </h3>
+				<div  style='height:400px; overflow-y: scroll; overflow-x: auto;'>
+				
+				<!-- Sans ng-table -->
+				<!-- -->
+				<table class="table-bordered table-striped">
+					<tr>
+						<th>No</td>
+						<th> Titre</th>
+						<th ng-click="orderBythis('rythme')"> Rythme</th>
+						<th ng-click="orderBythis('annee')"> Année</th>
+						<th ng-click="orderBythis('langue')"> Langue</th>
+						<th> Voir</th>
+					</tr>
+					<tr ng-repeat="vi in data01 | 
+								orderBy:tSorter | 
+								filterBy: ['annee']:fannee | 
+								filterBy:['prenomChanteur']:fprenom | 
+								filterBy:['sexe']:fsexe | 
+								filterBy:['pays']:fpays ">
+						<td>{{ $index + 1 }}</td>
+						<td> {{vi.titre }}</td>
+						<td> {{vi.rythme}}</td>
+						<td> {{vi.annee }}</td>
+						<td> {{vi.langue}}</td>
+						<td>
+							<a href="/detailo/{{vi._id}}" target="popup" onclick="window.open(this,'popup','width=300,height=300, top=20, scrollbars=no,resizable=no, left=900'); return false;">
+								<button type="button" class="btn btn-default" uib-tooltip="Details" tooltip-placement="right">
+									<i class="fas fa-eye"></i>
+								</button>
+							</a>
+						</td>
+					</tr>
+				</table>
+				
+				<!--     Avec ng-table     -->
+				<!--
+				<table ng-table="tableParams" class="table table-condensed  table-striped" show-filter="true">
+				
+				<table ng-table="tableParams" class="table-bordered" show-filter="false">
+					<tr ng-repeat="vi in data01">
+						<td>{{ $index + 1 }}</td>
+						<td title="'Titre'"  sortable="'titre'" >   {{vi.titre}}</td>
+						<td title="'Rythme'" filter="{ ryhtme: 'text'}" sortable="'rythme'"> {{vi.rythme}}</td>
+						<td title="'Annee'" filter="{ annee: 'number'}" sortable="'annee'" > {{vi.annee}}</td>
+						<td title="'Langue'" filter="{ langue: 'text'}" sortable="'langue'"> {{vi.langue}}</td>
+						<td title="'Voir'" >
+							<a href="#/detailo/{{vi._id}}">
+								<button type="button" class="btn btn-default" uib-tooltip="Details" tooltip-placement="right">
+									<i class="fas fa-eye"></i>
+								</button>
+							</a>
+						</td>
+					</tr>
+				</table>
+				-->
+				</div>
+				<div>
+					<div style=" margin-left:15px;max-width: 400px; float:left">
+						<form >
+							<p> ===============</p>
+							<labd>Filtrer:</labd><br>
+							<labd>Annee</labd>		
+							<labd>Sexe </lab>
+							<labg>Prenom </labg><br>
+							
+							<input type='number' min=1804 ng-model='fannee' name='fannee' style="width:20%"/>
+							<select name="fsexe" ng-model="fsexe" style="width:25%" >
+							  <option value="femme">Feminin</option>
+							  <option value="homme">Homme</option>
+							  <option selected></option>
+							</select>
+							<input type='text'  ng-model='fprenom' name='fprenom' style="width:50%"/><br>							
+							<lab>Pays</lab> <select name="fpays" style="width:60%" ng-model="fpays" ng-options="pays for pays in pays">
+											</select>
+							<button  type="reset" onclick="window.location.reload(true);">Retablir</button>
+						</form><br><br>	
+					</di02v>							
+				</div>		
+			</div>		
+		</div>	
+		
+		<div class="container" style=" margin-left:15px; max-width: 350px;float:left">
+			<div >
+				<h3 style="text-align:center;">Details </h3>
+				<p> Iframe En Developpement. Voir en popup en attendant.</p>
+				<ul>
+					<li> Titre: {{data}} </li>
+					<li> Annee: {{data02}} </li>
+					<li> Chanteur: {{data02}} </li>
+					<li> Langue: {{data02}} </li>
+					<li> Rythme: {{data02}} </li>
+					<li> URL: {{data02}} </li>
+				</ul>	
+			</div>		
+		</div>			  		
+	</div>	
+	
+</body>
+</html>

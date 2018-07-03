@@ -1,0 +1,37 @@
+{
+  "name": "hahatube",
+  "version": "1.0.0",
+  "description": "Liste de videos musicales et documentaires -- by KT",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tkelogue"
+  },
+  "keywords": [
+    "video",
+    "tractr",
+    "test",
+    "KT"
+  ],
+  "author": "KT",
+  "license": "MIT",
+  "dependencies": {
+    "alert-node": "^1.2.1",
+    "axios": "^0.18.0",
+    "compression": "^1.7.2",
+    "connect-mongo": "^2.0.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "helmet": "^3.12.1",
+    "mongoose": "^5.1.7",
+    "mongoose-type-url": "^1.0.4",
+    "mustache": "^2.3.0",
+    "nodemon": "^1.17.5",
+    "normalizeurl": "^1.0.0",
+    "peer": "^0.2.8"
+  },
+  "devDependencies": {}
+}
